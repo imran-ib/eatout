@@ -30,7 +30,7 @@ beforeAll(async () => {
   await prisma.$executeRawUnsafe('DROP SCHEMA IF EXISTS public CASCADE');
   await prisma.$executeRawUnsafe('CREATE SCHEMA public');
 
-  execSync('yarn db-push:test --accept-data-loss', {env: process.env});
+  execSync('npm run db-push:test --accept-data-loss', {env: process.env});
 
   // Start server.
   const app: express.Application = createApp();

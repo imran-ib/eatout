@@ -1,31 +1,57 @@
-import {rule, shield} from 'graphql-shield';
+import {and, rule, shield} from 'graphql-shield';
 
 const rules = {
   isAuthenticatedUser: rule()((_, __, {userId}) => {
     return Boolean(userId);
   }),
-  isPostOwner: rule()(async (_, {id}, {prisma, userId}) => {
-    const author = await prisma.post
-      .findUnique({
-        where: {id: Number(id)},
-      })
-      .user();
+  isOwner: rule()(async (_, __, {userId, prisma}) => {
+    const user = await prisma.user.findFirst({
+      where: {
+        AND: [
+          {
+            role: 'OWNER',
+          },
+          {id: userId},
+        ],
+      },
+      select: {role: true},
+    });
 
-    return userId === author.id;
+    const Owner = Boolean(user);
+    if (Owner === false) {
+      return new Error('Only Owners are Allowed to create/modify restaurants');
+    }
+
+    return Owner;
+  }),
+  isClient: rule()(async (_, __, {userId, prisma}) => {
+    const user = await prisma.user.findFirst({
+      where: {
+        AND: [
+          {
+            role: 'CLIENT',
+          },
+          {id: userId},
+        ],
+      },
+      select: {role: true},
+    });
+
+    const Client = Boolean(user);
+    if (Client === false) {
+      return new Error('Only Clients are Allowed to create/modify orders');
+    }
+
+    return Client;
   }),
 };
 
 export const permissions = shield(
   {
-    Query: {
-      me: rules.isAuthenticatedUser,
-      filterPosts: rules.isAuthenticatedUser,
-      post: rules.isAuthenticatedUser,
-    },
+    Query: {},
     Mutation: {
-      createDraft: rules.isAuthenticatedUser,
-      deletePost: rules.isPostOwner,
-      publish: rules.isPostOwner,
+      CreateRestaurant: rules.isAuthenticatedUser,
+      DeleteRestaurant: and(rules.isAuthenticatedUser, rules.isOwner),
     },
   },
   {

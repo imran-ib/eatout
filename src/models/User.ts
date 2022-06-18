@@ -1,16 +1,4 @@
-import {list, objectType} from 'nexus';
-
-export const Profile = objectType({
-  name: 'Profile',
-  definition(t) {
-    t.id('id');
-    t.string('socialId');
-
-    t.field('authType', {
-      type: 'AuthType',
-    });
-  },
-});
+import {objectType} from 'nexus';
 
 export const User = objectType({
   name: 'User',
@@ -18,17 +6,13 @@ export const User = objectType({
     t.id('id');
     t.string('email');
     t.string('name');
-    t.string('nickname');
-    t.string('thumbURL');
-    t.string('photoURL');
-    t.date('birthDay');
-    t.gender('gender');
-    t.string('phone');
+    t.boolean('IsVerified');
     t.date('createdAt');
     t.date('updatedAt');
     t.date('deletedAt');
+    t.field('role', {type: 'Role'});
 
-    t.field('profile', {type: 'Profile'});
-    t.field('posts', {type: list('Post')});
+    // t.field('profile', {type: 'Profile'});
+    // t.field('posts', {type: list('Post')});
   },
 });

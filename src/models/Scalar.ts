@@ -13,6 +13,12 @@ enum GenderType {
   female = 'female',
 }
 
+export const ROLE = enumType({
+  name: 'Role',
+  members: ['CLIENT', 'OWNER', 'DELIVERY'],
+  asNexusMethod: 'role',
+});
+
 export const Gender = scalarType({
   name: 'Gender',
   asNexusMethod: 'gender',

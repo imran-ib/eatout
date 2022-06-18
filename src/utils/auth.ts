@@ -1,6 +1,7 @@
+import * as jwt from 'jsonwebtoken';
+
 import bcrypt from 'bcrypt';
 import path from 'path';
-import {verify} from 'jsonwebtoken';
 
 const SALT_ROUND = 10;
 
@@ -40,7 +41,7 @@ export function getUserId(authorization: string): string | null {
   }
 
   const token = authorization.replace('Bearer ', '');
-  const verifiedToken = verify(token, APP_SECRET) as Token;
+  const verifiedToken = jwt.verify(token, APP_SECRET) as Token;
 
   return verifiedToken && verifiedToken.userId;
 }
@@ -54,9 +55,22 @@ export const getToken = (req: Request & any): string | undefined => {
   }
 
   const token = authHeader.replace('Bearer ', '');
-  const verifiedToken = verify(token, APP_SECRET) as Token;
+  const verifiedToken = jwt.verify(token, APP_SECRET) as Token;
 
   return verifiedToken && verifiedToken.userId;
+};
+
+export const GenerateToken = (userId: string): string => {
+  return jwt.sign({userId: userId}, JWT_SECRET as string, {
+    audience: 'https://localhost:3000',
+    expiresIn: '30d',
+    header: {
+      alg: 'HS256',
+      typ: 'JWT',
+    },
+    issuer: 'https://localhost:4000/graphql',
+    mutatePayload: false,
+  });
 };
 
 export const encryptCredential = async (password: string): Promise<string> => {

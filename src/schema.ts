@@ -3,7 +3,7 @@ import * as types from './types';
 
 import {connectionPlugin, fieldAuthorizePlugin, makeSchema} from 'nexus';
 
-import {validationPlugin} from 'nexus-validation-plugin';
+import {validatePlugin} from 'nexus-validate';
 
 export const schema = makeSchema({
   types,
@@ -16,7 +16,7 @@ export const schema = makeSchema({
         return node.id;
       },
     }),
-    validationPlugin(),
+    validatePlugin(),
   ],
   outputs: {
     schema: path.join(__dirname, './generated/schema.graphql'),

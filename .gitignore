@@ -4,7 +4,7 @@ coverage/
 package-lock.json
 .DS_Store
 
-
+.env
 dotenv/prod.env
 dotenv/.env
 prisma/.env

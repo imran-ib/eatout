@@ -1,7 +1,8 @@
-import {post} from './resolvers/post';
-import {user} from './resolvers/user';
+import {restaurant} from './resolvers/Restaurants.tests';
+import {user} from './resolvers/User.tests';
 
 describe('main tests', () => {
   user();
-  post();
+  restaurant();
+  // post();
 });

@@ -1,6 +1,5 @@
 {
   "name": "prisma-nexus-apollo-boilerplate",
-  "packageManager": "yarn@3.1.1",
   "version": "1.0.0",
   "description": "Typescript apollo prisma boilerplate",
   "repository": "https://github.com/prisma-korea/prisma-nexus-apollo-boilerplate",
@@ -15,18 +14,18 @@
     "build": "npm -s run clean && npm -s run generate && tsc",
     "test": "dotenv -e ./dotenv/test.env -- jest --runInBand",
     "test:watch": "jest --watch",
-    "generate": "yarn generate:prisma && yarn generate:nexus",
+    "generate": "npm run generate:prisma && npm run generate:nexus",
     "generate:prisma": "prisma generate",
     "generate:nexus": "ts-node --transpile-only src/schema",
     "postinstall": "npm -s run generate",
-    "migrate:local": "dotenv -e ./dotenv/.env -- prisma migrate dev",
+    "migrate:local": "dotenv -e ./dotenv/dev.env -- prisma migrate dev",
     "migrate": "dotenv -e ./dotenv/dev.env -- prisma migrate deploy",
     "migrate:dev": "dotenv -e ./dotenv/dev.env -- prisma migrate dev",
     "migrate:reset": "dotenv -e ./dotenv/dev.env -- prisma migrate reset",
     "migrate:deploy": "dotenv -e ./dotenv/dev.env -- prisma migrate deploy",
     "db-push": "dotenv -e ./dotenv/dev.env -- prisma db push",
     "db-push:test": "dotenv -e ./dotenv/test.env -- prisma db push",
-    "studio": "dotenv -e ./dotenv/.env -- prisma studio"
+    "studio": "dotenv -e ./dotenv/dev.env -- prisma studio"
   },
   "dependencies": {
     "@graphql-tools/schema": "^8.3.1",
@@ -36,6 +35,7 @@
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "ejs": "^3.1.6",
+    "got": "^11.8.3",
     "graphql-iso-date": "^3.6.1",
     "graphql-middleware": "^6.1.13",
     "graphql-shield": "^7.5.0",
@@ -43,9 +43,10 @@
     "graphql-upload": "^13.0.0",
     "jsonwebtoken": "^8.5.1",
     "nexus": "^1.1.0",
-    "nexus-validation-plugin": "^0.2.0",
+    "nexus-validate": "^1.2.0",
     "path": "^0.12.7",
-    "subscriptions-transport-ws": "^0.11.0"
+    "subscriptions-transport-ws": "^0.11.0",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@dooboo/eslint-config": "^1.2.6",
@@ -77,7 +78,7 @@
     "typescript": "^4.5.5"
   },
   "engines": {
-    "node": ">=10.0.0"
+    "node": ">=12.0.0"
   },
   "resolutions": {
     "fs-capacitor": "^6.2.0",
