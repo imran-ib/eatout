@@ -52,6 +52,7 @@ export const permissions = shield(
     Mutation: {
       CreateRestaurant: rules.isAuthenticatedUser,
       DeleteRestaurant: and(rules.isAuthenticatedUser, rules.isOwner),
+      EditRestaurant: and(rules.isAuthenticatedUser, rules.isOwner),
     },
   },
   {

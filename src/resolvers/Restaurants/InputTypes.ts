@@ -9,3 +9,12 @@ export const CreateRestaurantInput = inputObjectType({
     t.nonNull.string('category');
   },
 });
+export const EditRestaurantInput = inputObjectType({
+  name: 'EditRestaurantInput',
+  definition(t) {
+    t.nonNull.string('id');
+    t.nonNull.string('address');
+    t.string('coverImage');
+    t.nonNull.string('category');
+  },
+});
