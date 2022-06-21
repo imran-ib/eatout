@@ -1,6 +1,7 @@
 /* eslint-disable jest/valid-expect */
 
-import {CreateRestaurant} from './queries/Restaurants-queries';
+import {CreateRestaurant, GetRestaurant} from './queries/Restaurants-queries';
+
 import {GraphQLClient} from 'graphql-request';
 import {PrismaClient} from '@prisma/client';
 import {USER} from './User.tests';
@@ -11,6 +12,7 @@ import {testHost} from '../testSetup';
 export function restaurant(): void {
   describe('RESTAURANTS', () => {
     let graphqlClient: GraphQLClient;
+    let Restaurant;
 
     beforeEach(async () => {
       graphqlClient = new GraphQLClient(testHost);
@@ -44,11 +46,14 @@ export function restaurant(): void {
       expect(res.CreateRestaurant).toHaveProperty('name');
       expect(res.CreateRestaurant).toHaveProperty('coverImage');
       expect(res.CreateRestaurant).toHaveProperty('address');
+      Restaurant = res;
     });
 
-    it.todo('it should Find Restaurant', async () => {});
-    it.todo('it should Update Restaurant', async () => {});
-    it.todo('it should Search for a  Restaurant', async () => {});
-    it.todo('it should Delete Restaurant', async () => {});
+    // it.todo('it should Find Restaurant', async () => {});
+    it('it should Update Restaurant', async () => {
+      const RestaurantId = Restaurant.CreateRestaurant.id;
+    });
+    // it.todo('it should Search for a  Restaurant', async () => {});
+    // it.todo('it should Delete Restaurant', async () => {});
   });
 }

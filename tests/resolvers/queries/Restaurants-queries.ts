@@ -14,6 +14,14 @@ export const CreateRestaurant = /* GraphQL */ `
     }
   }
 `;
+export const EditRestaurant = /* GraphQL */ `
+  mutation EditRestaurant($data: EditRestaurantInput!) {
+    EditRestaurant(data: $data) {
+      id
+      name
+    }
+  }
+`;
 
 export const DeleteRestaurant = /* GraphQL */ `
   mutation DeleteRestaurant($deleteRestaurantId: String!) {

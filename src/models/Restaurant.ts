@@ -14,3 +14,13 @@ export const Restaurant = objectType({
     t.field('category', {type: 'Category'});
   },
 });
+
+export const RestaurantSearchOutput = objectType({
+  name: 'RestaurantSearchOutput',
+
+  definition(t) {
+    t.list.field('Restaurant', {type: 'Restaurant'});
+    t.int('count');
+    t.int('page');
+  },
+});
