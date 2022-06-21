@@ -55,5 +55,7 @@ export function restaurant(): void {
     });
     // it.todo('it should Search for a  Restaurant', async () => {});
     // it.todo('it should Delete Restaurant', async () => {});
+    // it.todo('it should get All Categories', async () => {});
+    // it.todo('it should get Categories', async () => {});
   });
 }

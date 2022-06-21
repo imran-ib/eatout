@@ -3,3 +3,4 @@ export * from './DeleteRestaurant';
 export * from './GetRestaurantQuery';
 export * from './EditRestaurant';
 export * from './SearchRestaurantQuery';
+export * from './CategoryQueries';
