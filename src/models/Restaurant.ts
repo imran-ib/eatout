@@ -1,3 +1,4 @@
+import {Context} from '../context';
 import {objectType} from 'nexus';
 
 export const Restaurant = objectType({
@@ -17,10 +18,9 @@ export const Restaurant = objectType({
 
 export const RestaurantSearchOutput = objectType({
   name: 'RestaurantSearchOutput',
-
   definition(t) {
     t.list.field('Restaurant', {type: 'Restaurant'});
     t.int('count');
-    t.int('page');
+    t.int('pageCount');
   },
 });

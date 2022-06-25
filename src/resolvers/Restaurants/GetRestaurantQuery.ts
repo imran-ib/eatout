@@ -1,4 +1,4 @@
-import {extendType, nonNull, stringArg} from 'nexus';
+import {extendType, intArg, nonNull, stringArg} from 'nexus';
 
 import {Context} from '../../context';
 import {MyError} from '../../utils/error';
@@ -28,6 +28,35 @@ export const GetRestaurant = extendType({
             error,
             'UNABLE_TO_FIND_RESTAURANT',
             'Get One Restaurant Query',
+          );
+        }
+      },
+    });
+  },
+});
+
+export const GetAllRestaurants = extendType({
+  type: 'Query',
+  definition(t) {
+    t.field('GetAllRestaurants', {
+      type: 'RestaurantSearchOutput',
+      args: {page: nonNull(intArg({default: 1}))},
+      //@ts-ignore
+      resolve: async (_, {page}, ctx: Context) => {
+        try {
+          const res = await ctx.prisma.restaurant.findMany({
+            take: 25,
+            skip: (page - 1) * 25,
+          });
+
+          const count = await ctx.prisma.restaurant.count();
+
+          return {Restaurant: res, count, pageCount: Math.ceil(count / 2)};
+        } catch (error) {
+          return MyError(
+            error,
+            'GET_ALL_RESTAURANTS',
+            'Unable to get all restaurants',
           );
         }
       },

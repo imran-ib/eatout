@@ -6,11 +6,20 @@ import {MyError} from '../../utils/error';
 export const GetAllCategories = extendType({
   type: 'Query',
   definition(t) {
-    t.list.field('GetAllCategories', {
+    t.list.nullable.field('GetAllCategories', {
       type: 'Category',
+      //@ts-ignore
       resolve: async (_, __, ctx: Context) => {
         try {
-          return ctx.prisma.category.findMany();
+          return ctx.prisma.category
+            .findMany
+            //   {
+            //   include: {
+            //     Restaurant: true,
+            //     _count: true,
+            //   },
+            // }
+            ();
         } catch (error) {
           return MyError(
             error,
@@ -32,12 +41,16 @@ export const GetCategory = extendType({
         slug: nonNull(stringArg()),
         page: nonNull(intArg({default: 1})),
       },
+      //@ts-ignore
       resolve: async (_, {slug, page}, ctx: Context) => {
         try {
           const res = await ctx.prisma.category.findMany({
             where: {Slug: slug},
             include: {
-              Restaurant: true,
+              Restaurant: {
+                take: 2,
+                skip: (page - 1) * 2,
+              },
             },
           });
 

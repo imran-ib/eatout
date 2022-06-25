@@ -34,6 +34,8 @@ export const SearchRestaurant = extendType({
                 },
               ],
             },
+            take: 25,
+            skip: (page - 1) * 25,
           });
 
           const count = await ctx.prisma.restaurant.count({
@@ -57,7 +59,7 @@ export const SearchRestaurant = extendType({
             },
           });
 
-          return {Restaurant: result, count, page};
+          return {Restaurant: result, count, pageCount: Math.ceil(count / 25)};
         } catch (error) {
           return MyError(
             error,
