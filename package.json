@@ -38,6 +38,7 @@
     "got": "^11.8.3",
     "graphql-iso-date": "^3.6.1",
     "graphql-middleware": "^6.1.13",
+    "graphql-scalars": "^1.17.0",
     "graphql-shield": "^7.5.0",
     "graphql-subscriptions": "^2.0.0",
     "graphql-upload": "^13.0.0",

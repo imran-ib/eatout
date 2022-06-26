@@ -27,6 +27,9 @@ model User {
   deletedAt  DateTime?
 
   Restaurant Restaurant[]
+
+  Order Order[] @relation("Customer")
+  Rides Order[] @relation("Driver")
 }
 
 model VerifyEmail {
@@ -48,6 +51,8 @@ model Restaurant {
   ownerId    String
   category   Category  @relation(fields: [categoryId], references: [id])
   categoryId String
+  menu       Dish[]
+  orders     Order[]
   createdAt  DateTime? @default(now())
   updatedAt  DateTime? @default(now())
   deletedAt  DateTime?
@@ -67,4 +72,88 @@ model Category {
   deletedAt  DateTime?
 
   @@index([name])
+}
+
+model Dish {
+  id           String        @id @default(cuid())
+  name         String
+  photo        String
+  description  String?
+  price        Int
+  createdAt    DateTime?     @default(now())
+  updatedAt    DateTime?     @default(now())
+  deletedAt    DateTime?
+  options      DishOptions[]
+  Restaurant   Restaurant?   @relation(fields: [restaurantId], references: [id])
+  restaurantId String?
+
+  Order   Order?  @relation(fields: [orderId], references: [id])
+  orderId String?
+
+  orderItems OrderItems[]
+  @@index([name])
+}
+
+enum SpiceLevel {
+  LOW
+  MEDIUM
+  HIGH
+  KILL_ME
+}
+
+enum DishSize {
+  SMALL
+  MEDIUM
+  LARGE
+  EXTRA_LARGE
+}
+
+model DishOptions {
+  id           String     @id @default(cuid())
+  name         String
+  flavour      String?
+  size         DishSize   @default(MEDIUM)
+  spiceLevel   SpiceLevel @default(MEDIUM)
+  extraItems   String[]
+  OtherChoices Json[]
+  extraPrice   Int
+  createdAt    DateTime?  @default(now())
+  updatedAt    DateTime?  @default(now())
+  deletedAt    DateTime?
+  Dish         Dish?      @relation(fields: [dishId], references: [id])
+  dishId       String?
+}
+
+enum ORDER_STATUS {
+  PENDING
+  COOKING
+  PICKED_UP
+  DELIVERED
+}
+
+model Order {
+  id           String       @id @default(cuid())
+  total        Int
+  status       ORDER_STATUS @default(PENDING)
+  createdAt    DateTime?    @default(now())
+  updatedAt    DateTime?    @default(now())
+  deletedAt    DateTime?
+  Restaurant   Restaurant?  @relation(fields: [restaurantId], references: [id])
+  restaurantId String?
+  Customer     User?        @relation(fields: [customerId], references: [id], name: "Customer")
+  customerId   String?
+  Driver       User?        @relation(fields: [driverId], references: [id], name: "Driver")
+  driverId     String?
+  dishes       Dish[]
+}
+
+model OrderItems {
+  id               String    @id @default(cuid())
+  orderItemOptions Json[]
+  createdAt        DateTime? @default(now())
+  updatedAt        DateTime? @default(now())
+  deletedAt        DateTime?
+
+  Dish   Dish?   @relation(fields: [dishId], references: [id])
+  dishId String?
 }

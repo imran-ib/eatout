@@ -4,3 +4,4 @@ export * from './User';
 export * from './Restaurant';
 export * from './Category';
 export * from './PageCount';
+export * from './Dish';
