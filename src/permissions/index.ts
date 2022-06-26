@@ -53,6 +53,7 @@ export const permissions = shield(
       CreateRestaurant: rules.isAuthenticatedUser,
       DeleteRestaurant: and(rules.isAuthenticatedUser, rules.isOwner),
       EditRestaurant: and(rules.isAuthenticatedUser, rules.isOwner),
+      CreateDish: and(rules.isAuthenticatedUser, rules.isOwner),
     },
   },
   {

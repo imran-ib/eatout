@@ -6,12 +6,12 @@ export const DishOptions = objectType({
   definition(t) {
     t.id('id');
     t.string('name');
-    t.string('flavour');
+    t.list.string('flavour');
     t.int('extraPrice');
     t.list.string('extraItems');
     t.field('size', {type: 'DishSize'});
     t.field('spiceLevel', {type: 'SpiceLevel'});
-    t.field('OtherChoices', {type: 'JSONObject'});
+    t.list.field('OtherChoices', {type: 'JSONObject'});
   },
 });
 export const Dish = objectType({
@@ -30,3 +30,19 @@ export const Dish = objectType({
     // t.field('order', {type:"Order"})
   },
 });
+
+// {
+//   "data": {
+//     "RestaurantId": "cl4k6gyc70014iokg0a4x2bxl",
+//     "name": "Hot And Spicy Biryani",
+//     "price": 200,
+//     "photo": "www.photo.com",
+//     "description": "This is new Level Of Awesomeness",
+//     "flavour": "null",
+//     "extraPrice": null,
+//     "extraItems": null,
+//     "size": null,
+//     "spiceLevel": null,
+//     "OtherChoices": null
+//   }
+// }

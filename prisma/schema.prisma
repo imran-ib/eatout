@@ -76,7 +76,7 @@ model Category {
 
 model Dish {
   id           String        @id @default(cuid())
-  name         String
+  name         String        @unique
   photo        String
   description  String?
   price        Int
@@ -110,13 +110,13 @@ enum DishSize {
 
 model DishOptions {
   id           String     @id @default(cuid())
-  name         String
-  flavour      String?
+  name         String     @unique
+  flavour      String[]
   size         DishSize   @default(MEDIUM)
   spiceLevel   SpiceLevel @default(MEDIUM)
   extraItems   String[]
   OtherChoices Json[]
-  extraPrice   Int
+  extraPrice   Int?
   createdAt    DateTime?  @default(now())
   updatedAt    DateTime?  @default(now())
   deletedAt    DateTime?
